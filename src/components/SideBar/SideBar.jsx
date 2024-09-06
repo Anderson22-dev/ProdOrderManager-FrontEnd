@@ -1,5 +1,6 @@
 import { FaRegCircleUser } from "react-icons/fa6";
 import { BiLogOut } from "react-icons/bi";
+import { Link } from "react-router-dom";
 
 export function SideBar() {
   return (
@@ -9,12 +10,17 @@ export function SideBar() {
           Empresa
         </div>
         <div className="px-4">
-          <button className="w-full text-[#717D96] text-sm font-medium hover:bg-[#2D3648] hover:text-white text-start">
-            Visualizar Pedido
-          </button>
-          <button className="w-full text-[#717D96] text-sm font-medium hover:bg-[#2D3648] hover:text-white text-start">
-            Criar Pedido
-          </button>
+          <Link to={"/vieworders"}>
+            <button className="w-full text-[#717D96] text-sm font-medium hover:bg-[#2D3648] hover:text-white text-start">
+              Visualizar Pedido
+            </button>
+          </Link>
+
+          <Link to={"/createorder"}>
+            <button className="w-full text-[#717D96] text-sm font-medium hover:bg-[#2D3648] hover:text-white text-start">
+              Criar Pedido
+            </button>
+          </Link>
         </div>
       </div>
 
@@ -23,10 +29,13 @@ export function SideBar() {
           <FaRegCircleUser />
           <p className="text-sm font-medium">Nome do usuário</p>
         </div>
-        <button className="text-sm font-medium flex px-6 py-3 gap-2 items-center ">
-          <BiLogOut />
-          Sair
-        </button>
+
+        <Link to={"/"}>
+          <button className="text-sm font-medium flex px-6 py-3 gap-2 items-center ">
+            <BiLogOut />
+            Sair
+          </button>
+        </Link>
       </div>
     </div>
   );

@@ -1,10 +1,10 @@
 import { MdOutlineInfo } from "react-icons/md";
 import { SideBar } from "../../components/SideBar/SideBar";
+import { Link } from "react-router-dom";
 
 export default function ViewOrders() {
   const tableData = [
     {
-      ordem: 1,
       codigo: "0001-24",
       cliente: "ELETRICA & HIDRAULICA LTDA",
       produto: "Fonte 400W Mortal Duplo Carpado",
@@ -15,8 +15,7 @@ export default function ViewOrders() {
       status: "Em Produção",
     },
     {
-      ordem: 1,
-      codigo: "0001-24",
+      codigo: "0002-24",
       cliente: "ELETRICA & HIDRAULICA LTDA",
       produto: "Fonte 400W Mortal Duplo Carpado",
       qtd: 1,
@@ -48,13 +47,15 @@ export default function ViewOrders() {
             </tr>
           </thead>
           <tbody>
-            {tableData.map((order) => {
+            {tableData.map((order, index) => {
               return (
-                <tr key={order.ordem}>
-                  <td className="m-auto">
-                    <MdOutlineInfo />
+                <tr key={index}>
+                  <td className="text-2xl">
+                    <Link to={`/order/${order.codigo}`}>
+                      <MdOutlineInfo />
+                    </Link>
                   </td>
-                  <td>{order.ordem}</td>
+                  <td>{index + 1}</td>
                   <td>{order.codigo}</td>
                   <td>{order.cliente}</td>
                   <td>{order.produto}</td>

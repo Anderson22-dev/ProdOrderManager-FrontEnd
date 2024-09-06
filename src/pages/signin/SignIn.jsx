@@ -21,9 +21,10 @@ export function SignIn() {
             </Link>
           </p>
         </div>
-        <button className="bg-[#3444F7] text-white">
-          <Link to={"/vieworders"}>Entrar</Link>
-        </button>
+
+        <Link to={"/vieworders"}>
+          <button className="bg-[#3444F7] text-white">ENTRAR</button>
+        </Link>
       </div>
     </div>
   );
