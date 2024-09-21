@@ -1,10 +1,13 @@
 import { FaRegCircleUser } from "react-icons/fa6";
 import { BiLogOut } from "react-icons/bi";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/auth";
 
 export function SideBar() {
+  const { logout } = useContext(AuthContext);
   return (
-    <div className="w-[16.25rem] h-screen bg-[#EDF0F7] border-r-2 border-r-black flex flex-col justify-between">
+    <div className="w-[16.25rem] h-screen sticky top-0 bg-[#EDF0F7] border-r-2 border-r-black flex flex-col justify-between">
       <div className="flex flex-col gap-1">
         <div className="bg-[#E2E7F0] px-6 py-3 w-full text-base font-semibold">
           Empresa
@@ -27,15 +30,18 @@ export function SideBar() {
       <div className="border-t-black border-t-2 py-2">
         <div className="flex px-6 py-3 gap-2 items-center ">
           <FaRegCircleUser />
-          <p className="text-sm font-medium">Nome do usuário</p>
+          <p className="text-sm font-medium">
+            {localStorage.getItem("userName")}
+          </p>
         </div>
 
-        <Link to={"/"}>
-          <button className="text-sm font-medium flex px-6 py-3 gap-2 items-center ">
-            <BiLogOut />
-            Sair
-          </button>
-        </Link>
+        <button
+          className="text-sm font-medium flex px-6 py-3 gap-2 items-center "
+          onClick={logout}
+        >
+          <BiLogOut />
+          Sair
+        </button>
       </div>
     </div>
   );

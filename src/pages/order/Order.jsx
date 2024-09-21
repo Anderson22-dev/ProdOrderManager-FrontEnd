@@ -1,52 +1,60 @@
-// import { useEffect, useState } from "react";
-// import { useParams } from "react-router-dom";
-// import { configApi } from "../../services/api";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { FiPrinter, FiEdit, FiCheck } from "react-icons/fi";
 import { SideBar } from "../../components/SideBar/SideBar";
+import { OrderPDF } from "../../pdfs/OrderPDF/OrderPDF";
+import { api } from "../../services/api";
 
 export function Order() {
-  //   const [order, setOrder] = useState([]);
-  // const id = useParams();
-
-  //   async function getOrder() {
-  //     const orderFromApi = await configApi.get(`/getOrder/${id}`);
-  //     setOrder(orderFromApi);
-  //   }
-
-  //   useEffect(() => {
-  //     getOrder();
-  //   });
-
-  const order = [
+  const [order, setOrder] = useState([
     {
-      codigo: "0001-24",
-      cliente: "ELETRICA & HIDRAULICA LTDA",
-      produto: "Fonte 400W Mortal Duplo Carpado",
-      qtd: 1,
-      dataAb: "25/08/2024",
-      dataUr: "25/08/2024",
-      dataE: "25/08/2024",
-      status: "Em Produção",
+      id: "0001-24",
+      costumer: "dsd",
+      product: "fdd",
+      quantity: 2,
+      openingDate: null,
+      lastReviewDate: null,
+      deliveryDate: null,
+      status: "ffdd",
     },
-  ];
-
-  const orderDescription = [
+  ]);
+  const [orderDescription, setOrderDescription] = useState([
     {
       item: "Carretilha",
       unid: "pç",
       qtd: "1",
     },
-  ];
+  ]);
+
+  const id = useParams();
+
+  async function getOrder() {
+    const orderFromApi = await api.get(`/getOrder/${id}`);
+    setOrder(orderFromApi);
+  }
+
+  async function getOrderDescription() {
+    const orderDescriptionFromApi = await api.get(`/getOrder/${id}`);
+    setOrderDescription(orderDescriptionFromApi);
+  }
+
+  async function putReviewData(data) {
+    await api.post(`/getOrder`, { data });
+  }
+
+  useEffect(() => {
+    getOrder();
+    getOrderDescription();
+  }, []);
 
   return (
     <div className="flex">
       <SideBar />
       <div className="w-full flex flex-col px-6 py-12 gap-5">
-        <h1 className="text-5xl">Pedido</h1>
+        <h1 className="text-5xl">Pedido {order[0].id}</h1>
         <table className="w-full">
           <thead className="bg-[#2D3648] text-white px-4 py-2 h-10 border-2 border-[#CBD2E0] rounded-full">
             <tr>
-              <th>Ordem</th>
               <th>Código</th>
               <th>Cliente</th>
               <th>Produto</th>
@@ -58,21 +66,14 @@ export function Order() {
             </tr>
           </thead>
           <tbody>
-            {order.map((order, index) => {
-              return (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>{order.codigo}</td>
-                  <td>{order.cliente}</td>
-                  <td>{order.produto}</td>
-                  <td>{order.qtd}</td>
-                  <td>{order.dataAb}</td>
-                  <td>{order.dataUr}</td>
-                  <td>{order.dataE}</td>
-                  <td>{order.status}</td>
-                </tr>
-              );
-            })}
+            <td>{order[0].id}</td>
+            <td>{order[0].costumer}</td>
+            <td>{order[0].product}</td>
+            <td>{order[0].quantity}</td>
+            <td>{order[0].openingDate}</td>
+            <td>{order[0].lastReviewDate}</td>
+            <td>{order[0].deliveryDate}</td>
+            <td>{order[0].status}</td>
           </tbody>
         </table>
         <table className="w-full">
@@ -98,7 +99,10 @@ export function Order() {
           </tbody>
         </table>
         <div className="flex w-full justify-end gap-12">
-          <button className="bg-[#3444F7] text-white flex items-center gap-2">
+          <button
+            className="bg-[#3444F7] text-white flex items-center gap-2"
+            onClick={() => OrderPDF(order, orderDescription)}
+          >
             <FiPrinter />
             IMPRIMIR
           </button>
